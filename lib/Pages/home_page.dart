@@ -6,6 +6,7 @@ import 'package:tasbih_counter/Components/objectives_repository.dart';
 import 'package:tasbih_counter/Components/objectives.dart';
 import 'package:tasbih_counter/Components/statistics_service.dart';
 
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -40,6 +41,20 @@ class _HomePageState extends State<HomePage> {
           await _statsService.updateCounts(change);
         }
 
+        if (mounted) setState(() {});
+      }
+    }
+  }
+
+  void _resetCounter() {
+    final selected = _repository.getSelectedObjective();
+    if (selected != null) {
+      final objectives = _repository.getObjectives();
+      final index = objectives.indexWhere((obj) =>
+      obj[0] == selected[0] && obj[2] == selected[2]);
+
+      if (index != -1) {
+        _repository.updateObjectiveCount(index, 0, updateHistory: false);
         if (mounted) setState(() {});
       }
     }
@@ -116,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                       LinearProgressIndicator(
                         value: (selectedObjective[1] as int) / (selectedObjective[2] as int),
                         backgroundColor: Colors.grey[300],
-                        color: colorScheme.primary,
+                        color: Colors.white,
                       ),
                     ],
                   ),
@@ -213,11 +228,7 @@ class _HomePageState extends State<HomePage> {
                     shape: CircleBorder(),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(30),
-                      onTap: () {
-                        if (selectedObjective != null) {
-                          _updateCounter(0);
-                        }
-                      },
+                      onTap: _resetCounter,
                       child: Container(
                         width: 50,
                         height: 50,

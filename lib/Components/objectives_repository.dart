@@ -8,8 +8,7 @@ class ObjectivesRepository {
   ObjectivesRepository(this.objectivesBox, this.historyBox);
 
   List<dynamic> getObjectives() => objectivesBox.get('objectives', defaultValue: []);
-
-  List<dynamic>? getSelectedObjective() => objectivesBox.get('selectedObjective', defaultValue: null);
+  List<dynamic>? getSelectedObjective() => objectivesBox.get('selectedObjective');
 
   void addObjective(List<dynamic> objective) {
     final objectives = getObjectives();
@@ -39,7 +38,7 @@ class ObjectivesRepository {
     objectivesBox.put('selectedObjective', objective);
   }
 
-  void updateObjectiveCount(int index, int newCount) {
+  void updateObjectiveCount(int index, int newCount, {bool updateHistory = true}) {
     final objectives = getObjectives();
     if (index >= 0 && index < objectives.length) {
       objectives[index][1] = newCount;
@@ -49,7 +48,9 @@ class ObjectivesRepository {
       if (selected != null && objectives[index][0] == selected[0] && objectives[index][2] == selected[2]) {
         objectivesBox.put('selectedObjective', objectives[index]);
       }
-      _updateHistory(objectives[index]);
+      if (updateHistory) {
+        _updateHistory(objectives[index]);
+      }
     }
   }
 

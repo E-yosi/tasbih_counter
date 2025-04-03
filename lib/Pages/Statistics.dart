@@ -30,7 +30,8 @@ class StatisticsScreen extends StatelessWidget {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: const Text('Cancel',
+                style: TextStyle(color: Colors.red),),
               onPressed: () {
                 Navigator.of(context).pop();
               },

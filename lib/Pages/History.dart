@@ -49,7 +49,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text("Cancel"),
+            child: Text("Cancel", style: TextStyle(color: Colors.red)),
           ),
           TextButton(
             onPressed: () {
